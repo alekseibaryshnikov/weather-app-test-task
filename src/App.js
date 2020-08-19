@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import Loading from './components/Screens/Loading/Loading';
+import Weather from './components/Screens/Weather/Weather';
 import { fetchWeather, selectWeatherData } from './redux/features/weatherReducer';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -20,7 +21,7 @@ function App() {
 
   return (
     <div className="App">
-      {loaded ? <div>Loaded.</div> : <Loading />}
+      {loaded ? <Weather/> : <Loading />}
     </div>
   );
 }
