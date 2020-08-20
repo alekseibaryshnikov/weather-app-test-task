@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import WeatherDto from '../models/WeatherDto';
 import { getWeather } from '../../api/yrNoApi';
 
 export const slice = createSlice({

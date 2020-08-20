@@ -13,7 +13,7 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchWeather());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     setLoaded(Boolean(weatherData));

@@ -1,18 +1,18 @@
 import React from 'react';
-import { Grid, Paper } from '@material-ui/core';
-import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Card } from '@material-ui/core';
+import { Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import Container from '../../../Common/Container/Container';
 
 export default function () {
-    return <Grid container>
-        <Grid item xs={12}>
-            <Grid container justify='center'>
-                <Grid item>
-                    <Paper>
-                    Chart
-                    </Paper>
-                </Grid>
-            </Grid>
-        </Grid>
-    </Grid>
+    const styles = makeStyles({
+        root: {
+            padding: 12
+        }
+    })();
+
+    return <Container>
+        <Paper className={styles.root}>
+            Chart
+        </Paper>
+    </Container>
 }

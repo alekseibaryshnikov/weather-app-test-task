@@ -1,35 +1,27 @@
 import React from 'react';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import { Grid } from '@material-ui/core';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import Container from '../../../../Common/Container/Container';
+import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
 export default function () {
-    const useStyles = makeStyles({
+    const styles = makeStyles({
         root: {
-            minWidth: 275,
-        },
-        bullet: {
-            display: 'inline-block',
-            margin: '0 2px',
-            transform: 'scale(0.8)',
-        },
-        title: {
-            fontSize: 14,
-        },
-        pos: {
-            marginBottom: 12,
-        },
-    });
+            '& > *': {
+                margin: '0 100px'
+            }
+        }
+    })();
 
-    const classes = useStyles();
-
-    return <Grid container className={classes.root} spacing={2}>
-        <Grid item xs={12}>
-            <Grid container justify='center'>
-                <ArrowBackIosIcon />
-                <ArrowForwardIosIcon />
-            </Grid>
-        </Grid>
-    </Grid>
+    return <Container>
+        <div className={styles.root}>
+            <Button variant="contained" color="primary">
+                <NavigateBeforeIcon />
+            </Button>
+            <Button variant="contained" color="primary">
+                <NavigateNextIcon />
+            </Button>
+        </div>
+    </Container>
 }
