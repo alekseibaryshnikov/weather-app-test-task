@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormControl, RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
-import Container from '../../../../Common/Container/Container';
+import Container from '../../../../Common/Container';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentDegree, constants, changeDegree } from '../../../../../redux/features/settingsReducer';
 
