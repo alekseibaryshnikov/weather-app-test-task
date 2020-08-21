@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Grid from '@material-ui/core/Grid';
-import Container from '../../../Common/Container';
+import { Grid, Container, makeStyles } from '@material-ui/core';
 import WeatherCard from './WeatherCard';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCards, setCards, changeTemperatureType } from '../../../../redux/features/weatherReducer';
@@ -19,10 +18,16 @@ export default function () {
         dispatch(changeTemperatureType(degree));
     }, [degree])
 
-    return <Container>
-        <Grid container justify="center" spacing={2}>
+    const styles = makeStyles({
+        root: {
+            marginBottom: '30px'
+        }
+    })();
+
+    return <Container className={styles.root} maxWidth='lg'>
+        <Grid container justify='space-between' spacing={2}>
             {cards && cards.map((value) => (
-                <Grid item key={value.date}>
+                <Grid item key={value.date} xs={2}>
                     <WeatherCard data={value} />
                 </Grid>
             ))}

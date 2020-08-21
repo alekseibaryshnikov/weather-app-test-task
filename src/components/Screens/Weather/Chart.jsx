@@ -1,7 +1,7 @@
 import React from 'react';
 import { Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '../../../Common/Container';
+import { Container } from '@material-ui/core';
 
 export default function () {
     const styles = makeStyles({
@@ -10,7 +10,7 @@ export default function () {
         }
     })();
 
-    return <Container>
+    return <Container maxWidth="lg">
         <Paper className={styles.root}>
             Chart
         </Paper>

@@ -19,8 +19,8 @@ export default function WeatherCard(props) {
     return <Card>
         <CardContent>
             <p>Temperature: {data.temperature}</p>
-            <p>{data.pressure}</p>
-            <p>{data.weatherType}</p>
+            <p>Pressure: {data.pressure}</p>
+            <p>Weather: {data.weatherType}</p>
             <p>Date: {`${date.getDate()}.${date.getUTCMonth()}`}</p>
         </CardContent>
     </Card>;
