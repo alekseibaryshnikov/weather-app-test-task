@@ -61,6 +61,12 @@ function getCards(weatherData, startFrom = 0) {
     return cards;
 }
 
+/**
+ * Collapse timeseries and get average weather data for a day.
+ * 
+ * @param {*} referenceDate 
+ * @param {*} weatherData 
+ */
 function summarize(referenceDate, weatherData) {
     const summarizedDay = weatherData.properties.timeseries.filter(item => {
         const itemDate = new Date(item.time);
@@ -68,7 +74,8 @@ function summarize(referenceDate, weatherData) {
             itemDate.getMonth() === referenceDate.getMonth() &&
             itemDate.getDate() === referenceDate.getDate();
         const dayTime = itemDate.getHours() > 10 && itemDate.getHours() < 20;
-
+        
+        // Filter timeseries by day and day time. We need weather during the day.
         return equalDates && dayTime;
     }).reduce((acc, curr, idx, src) => {
         const { data: { instant: { details: { air_temperature, air_pressure_at_sea_level } } } } = curr;
@@ -97,6 +104,12 @@ function summarize(referenceDate, weatherData) {
     };
 }
 
+/**
+ * Convert celcisus to fahrenheit and vice versa.
+ * 
+ * @param {*} card 
+ * @param {*} currentDegrees 
+ */
 function temperatureConverter(card, currentDegrees) {
     if (card.degrees === currentDegrees || !currentDegrees) {
         return card.temperature;
@@ -109,6 +122,11 @@ function temperatureConverter(card, currentDegrees) {
     }
 }
 
+/**
+ * Convert hPa pressure to mmHg.
+ * 
+ * @param {*} pressure 
+ */
 function convertPressure(pressure) {
     return Math.round(pressure * 0.75);
 }
