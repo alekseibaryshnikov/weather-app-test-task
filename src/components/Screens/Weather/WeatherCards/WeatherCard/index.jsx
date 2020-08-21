@@ -14,13 +14,14 @@ WeatherCard.propTypes = PropTypes.shape({
 
 export default function WeatherCard(props) {
     const { data } = props;
+    const date = new Date(data.date);
 
     return <Card>
-            <CardContent>
-                <p>{data.temperature}</p>
-                <p>{data.pressure}</p>
-                <p>{data.weatherType}</p>
-                <p>{data.date}</p>
-            </CardContent>
-        </Card>;
+        <CardContent>
+            <p>Temperature: {data.temperature}</p>
+            <p>{data.pressure}</p>
+            <p>{data.weatherType}</p>
+            <p>Date: {`${date.getDate()}.${date.getUTCMonth()}`}</p>
+        </CardContent>
+    </Card>;
 }
