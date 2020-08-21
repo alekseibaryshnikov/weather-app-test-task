@@ -5,16 +5,17 @@ import WeatherCard from './WeatherCard';
 import { useSelector } from 'react-redux';
 import { selectWeatherData } from '../../../../redux/features/weatherReducer';
 
-
 export default function () {
     const weatherData = useSelector(selectWeatherData);
     const cards = prepareCards(weatherData);
 
+    console.log(cards.slice(0, 3))
+
     return <Container>
         <Grid container justify="center" spacing={2}>
-            {[0, 1, 2].map((value) => (
-                <Grid item key={value}>
-                    <WeatherCard />
+            {cards.slice(3).map((value) => (
+                <Grid item key={value.date}>
+                    <WeatherCard data={value} />
                 </Grid>
             ))}
         </Grid>
@@ -23,15 +24,13 @@ export default function () {
 
 function prepareCards(weatherData) {
     const cards = [];
-    const today = new Date();
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0, today = new Date(); i < 5; i++) {
         if (i > 0) {
             today.setDate(today.getDate() + 1);
         }
 
-        const tmp = summarize(today, weatherData);
-        cards.push(tmp)
+        cards.push(summarize(today, weatherData))
     }
 
     return cards;
@@ -53,7 +52,7 @@ function summarize(referenceDate, weatherData) {
             const middle = src[Math.floor(src.length / 2)];
             const { data: { next_6_hours: { summary: { symbol_code } } } } = middle;
             acc.weatherType = symbol_code;
-            acc.date = referenceDate;
+            acc.date = curr.time;
         }
         
         acc.temperature = air_temperature + acc.temperature;
