@@ -1,11 +1,16 @@
 import React from 'react';
 import { FormControl, RadioGroup, FormControlLabel, Radio, Grid, makeStyles } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectCurrentDegree, constants, changeDegree } from '../../../../redux/features/settingsReducer';
+import { useDispatch } from 'react-redux';
+import { constants, changeDegree } from '../../../../redux/features/settingsReducer';
+import PropTypes from 'prop-types';
 
-export default function () {
+Degrees.propTypes = PropTypes.shape({
+    degrees: PropTypes.string
+});
+
+export default function Degrees(props) {
+    const {degrees} = props;
     const dispatch = useDispatch();
-    const currentDegree = useSelector(selectCurrentDegree);
     const styles = makeStyles({
         root: {
             width: '100%',
@@ -22,14 +27,14 @@ export default function () {
                 <RadioGroup className={styles.group} row aria-label="position" name="position" defaultValue="top">
                     <FormControlLabel
                         value={constants.CELCIUS}
-                        control={<Radio color="primary" checked={currentDegree === constants.CELCIUS} />}
+                        control={<Radio color="primary" checked={degrees === constants.CELCIUS} />}
                         label="Celcius"
                         labelPlacement="end"
                         onClick={() => dispatch(changeDegree(constants.CELCIUS))}
                     />
                     <FormControlLabel
                         value={constants.FAHRENHEIT}
-                        control={<Radio color="primary" checked={currentDegree === constants.FAHRENHEIT} />}
+                        control={<Radio color="primary" checked={degrees === constants.FAHRENHEIT} />}
                         label="Fahrenheit"
                         labelPlacement="end"
                         onClick={() => dispatch(changeDegree(constants.FAHRENHEIT))}

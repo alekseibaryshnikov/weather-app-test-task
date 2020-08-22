@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Grid, Container, makeStyles } from '@material-ui/core';
 import WeatherCard from './WeatherCard';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectCards, setCards, changeTemperatureType } from '../../../../redux/features/weatherReducer';
-import { selectCurrentDegree } from '../../../../redux/features/settingsReducer';
+import { useDispatch } from 'react-redux';
+import { setCards, changeTemperatureType } from '../../../../redux/features/weatherReducer';
+import PropTypes from 'prop-types';
 
-export default function () {
-    const cards = useSelector(selectCards);
-    const degree = useSelector(selectCurrentDegree);
+ListOfWeatherCards.propTypes = PropTypes.shape({
+    cards: PropTypes.object,
+    degrees: PropTypes.string
+});
+
+export default function ListOfWeatherCards(props) {
+    const { cards, degrees } = props;
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -15,8 +19,8 @@ export default function () {
     }, []);
 
     useEffect(() => {
-        dispatch(changeTemperatureType(degree));
-    }, [degree])
+        dispatch(changeTemperatureType(degrees));
+    }, [degrees])
 
     const styles = makeStyles({
         root: {
@@ -25,8 +29,8 @@ export default function () {
     })();
 
     return <Container className={styles.root} maxWidth='lg'>
-        <Grid container justify='space-between' alignItems='stretch' spacing={2}>
-            {cards && cards.map((value) => (
+        <Grid container justify='center' alignItems='stretch' spacing={2}>
+            {cards && cards.slice(0, 3).map((value) => (
                 <Grid item key={value.date} xs={2}>
                     <WeatherCard data={value} />
                 </Grid>
