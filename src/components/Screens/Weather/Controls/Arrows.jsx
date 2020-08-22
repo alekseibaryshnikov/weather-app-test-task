@@ -18,7 +18,7 @@ export default function () {
     return <Container className={styles.root} maxWidth='lg'>
         <Grid container direction="row" justify="space-between">
             <Grid item xs={2}>
-                <Button variant="contained" color="primary">
+                <Button disabled variant="contained" color="primary">
                     <NavigateBeforeIcon />
                 </Button>
             </Grid>

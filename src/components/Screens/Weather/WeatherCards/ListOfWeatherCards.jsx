@@ -25,7 +25,7 @@ export default function () {
     })();
 
     return <Container className={styles.root} maxWidth='lg'>
-        <Grid container justify='space-between' spacing={2}>
+        <Grid container justify='space-between' alignItems='stretch' spacing={2}>
             {cards && cards.map((value) => (
                 <Grid item key={value.date} xs={2}>
                     <WeatherCard data={value} />
