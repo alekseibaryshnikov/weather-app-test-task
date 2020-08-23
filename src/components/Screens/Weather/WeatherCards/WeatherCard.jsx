@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Paper, makeStyles } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
+import { setActiveDateForCharts } from '../../../../redux/features/settingsReducer';
 
 WeatherCard.propTypes = PropTypes.shape({
     data: PropTypes.shape({
@@ -18,11 +20,13 @@ export default function WeatherCard(props) {
         root: {
             height: '100%',
             boxSizing: 'border-box',
-            padding: 10
+            padding: 10,
+            cursor: 'pointer'
         }
     })();
+    const dispatch = useDispatch();
 
-    return <Paper className={styles.root}>
+    return <Paper className={styles.root} onClick={() => dispatch(setActiveDateForCharts(date.getTime()))}>
         <p>Temperature: {data.temperature}</p>
         <p>Pressure: {data.pressure}</p>
         <p>Weather: {data.weatherType}</p>

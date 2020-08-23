@@ -4,8 +4,8 @@ import Arrows from './Controls/Arrows';
 import Degrees from './Controls/Degrees';
 import Chart from './Chart';
 import { useSelector } from 'react-redux';
-import { selectCurrentDegree, selectPageSize, selectCurrentPage } from '../../../redux/features/settingsReducer';
-import { selectCards } from '../../../redux/features/weatherReducer';
+import { selectCurrentDegree, selectPageSize, selectCurrentPage, selectActiveDateForCharts } from '../../../redux/features/settingsReducer';
+import { selectCards, selectWeatherData } from '../../../redux/features/weatherReducer';
 
 
 export default function () {
@@ -13,12 +13,14 @@ export default function () {
     const currentDegrees = useSelector(selectCurrentDegree);
     const pageSize = useSelector(selectPageSize);
     const currentPage = useSelector(selectCurrentPage);
+    const activeDateForCharts = useSelector(selectActiveDateForCharts);
+    const weatherData = useSelector(selectWeatherData);
     const cardsAmount = cards ? cards.length : 0;
 
     return <>
         <Degrees degrees={currentDegrees} />
         <Arrows pageSize={pageSize} currentPage={currentPage} cardsAmount={cardsAmount} />
         <ListOfWeatherCards cards={cards} degrees={currentDegrees} currentPage={currentPage} pageSize={pageSize} />
-        <Chart />
+        <Chart activeDateForCharts={activeDateForCharts} weatherData={weatherData} />
     </>
 }
