@@ -65,29 +65,49 @@ export default function Chart(props) {
         if (ref.current) {
             ref.current.innerHTML = '';
             
-            const temperatureList = timeseries.map(item => item.temperature);
-            const hoursList = timeseries.map(item => item.hour);
-            const { min: minHour, max: maxHour } = getMinAndMax(hoursList);
-            const { min: minTemperature, max: maxTemperature } = getMinAndMax(temperatureList);
             const MARGIN = 30;
-            const HEIGHT = (maxTemperature - minTemperature) * MARGIN;
+            const HEIGHT = 300;
             const WIDTH = ref.current.getBoundingClientRect().width;
+            
+            // Axis
             const svgElement = d3.select(ref.current)
                 .append('svg')
-                .attr('width', WIDTH)
-                .attr('height', HEIGHT + MARGIN)
+                    .attr('width', WIDTH)
+                    .attr('height', HEIGHT + MARGIN);
+            const g = svgElement        
                 .append('g')
-                .attr('transform', `translate(${MARGIN}, 0)`);
+                    .attr('transform', `translate(${MARGIN}, 0)`);
             const xScale = d3.scaleLinear()
-                .domain([minHour - 1, maxHour + 1])
-                .range([0, WIDTH - MARGIN / 2]);
+                .domain([d3.min(timeseries, d => d.hour), d3.max(timeseries, d => d.hour) + 1])
+                .range([0, WIDTH - MARGIN / 2])
+                .nice();
             const yScale = d3.scaleLinear()
-                .domain([minTemperature, maxTemperature])
+                .domain([d3.min(timeseries, d => d.temperature), d3.max(timeseries, d => d.temperature)])
                 .range([HEIGHT, 0]);
-            const axisGeneratorX = d3.axisBottom().scale(xScale);
+            const axisGeneratorX = d3.axisBottom().scale(xScale).ticks(2);
             const axisGeneratorY = d3.axisLeft().scale(yScale);
-            svgElement.append('g').attr('transform', `translate(0, ${HEIGHT})`).call(axisGeneratorX);
-            svgElement.append('g').call(axisGeneratorY);
+            g.append('g')
+                .attr('transform', `translate(0, ${HEIGHT})`)
+                .call(axisGeneratorX);
+            g.append('g')
+                .call(axisGeneratorY);
+
+            // Bars
+            const x = d3.scaleBand()
+                .domain(d3.range(timeseries.length))
+                .range([1, WIDTH - MARGIN]);
+            const y = d3.scaleLinear()
+                .domain([0, d3.max(timeseries, d => d.temperature)]).nice()
+                .range([HEIGHT, MARGIN]);
+            g.append("g")
+                .attr("fill", 'steelblue')
+              .selectAll("rect")
+              .data(timeseries)
+              .join("rect")
+                .attr("x", (_, i) => x(i))
+                .attr("y", d => y(d.temperature))
+                .attr("height", d => y(0) - y(d.temperature))
+                .attr("width", x.bandwidth());
         }
     }, [timeseries, ref]);
 
@@ -99,11 +119,4 @@ export default function Chart(props) {
             <div ref={ref} className={styles.chart}></div>
         </Paper>
     </Container>}</>
-}
-
-function getMinAndMax(arr) {
-    return {
-        min: Math.min.apply(null, arr),
-        max: Math.max.apply(null, arr)
-    }
 }

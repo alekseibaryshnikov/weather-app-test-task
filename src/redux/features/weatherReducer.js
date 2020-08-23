@@ -73,10 +73,14 @@ function summarize(referenceDate, weatherData) {
         const equalDates = itemDate.getFullYear() === referenceDate.getFullYear() &&
             itemDate.getMonth() === referenceDate.getMonth() &&
             itemDate.getDate() === referenceDate.getDate();
-        const dayTime = itemDate.getHours() > 10 && itemDate.getHours() < 20;
-        
-        // Filter timeseries by day and day time. We need weather during the day.
-        return equalDates && dayTime;
+        if (new Date().getDate() === itemDate.getDate()) {
+            // Filter by day for the current day.
+            return equalDates;
+        } else {
+            // Filter timeseries by day and day time. We need weather during the day.
+            const dayTime = itemDate.getHours() > 10 && itemDate.getHours() < 23
+            return equalDates && dayTime;
+        }
     }).reduce((acc, curr, idx, src) => {
         const { data: { instant: { details: { air_temperature, air_pressure_at_sea_level } } } } = curr;
 
