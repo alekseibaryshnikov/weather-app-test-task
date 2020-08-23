@@ -18,7 +18,7 @@ export default function () {
     return <>
         <Degrees degrees={currentDegrees} />
         <Arrows pageSize={pageSize} currentPage={currentPage} cardsAmount={cardsAmount} />
-        <ListOfWeatherCards cards={cards} degrees={currentDegrees} />
+        <ListOfWeatherCards cards={cards} degrees={currentDegrees} currentPage={currentPage} pageSize={pageSize} />
         <Chart />
     </>
 }
