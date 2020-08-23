@@ -10,7 +10,7 @@ export default function () {
         }
     })();
 
-    return <Container maxWidth="lg">
+    return <Container maxWidth="md">
         <Paper className={styles.root}>
             Chart
         </Paper>

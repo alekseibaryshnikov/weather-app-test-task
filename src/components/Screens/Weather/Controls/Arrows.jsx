@@ -36,7 +36,7 @@ export default function Arrows(props) {
         setNextPageDisabled(currentPage >= Math.ceil(cardsAmount/ pageSize))
     }, [cardsAmount, currentPage, pageSize]);
 
-    return <Container className={styles.root} maxWidth='lg'>
+    return <Container className={styles.root} maxWidth='md'>
         <Grid container direction="row" justify="space-between">
             <Grid item xs={2}>
                 <Button disabled={previousPageDisabled} variant="contained" color="primary" onClick={() => dispatch(prevoiusPage())}>

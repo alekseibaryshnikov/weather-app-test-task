@@ -38,10 +38,10 @@ export default function ListOfWeatherCards(props) {
         }
     })();
 
-    return <Container className={styles.root} maxWidth='lg'>
+    return <Container className={styles.root} maxWidth='md'>
         <Grid container justify='center' alignItems='stretch' spacing={2}>
             {slicedCards && slicedCards.map((value) => (
-                <Grid item key={value.date} xs={2}>
+                <Grid item key={value.date} xs={4}>
                     <WeatherCard data={value} />
                 </Grid>
             ))}

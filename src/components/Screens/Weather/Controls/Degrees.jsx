@@ -21,7 +21,7 @@ export default function Degrees(props) {
         }
     })();
 
-    return <Grid container direction="row" justify="center" alignItems="center">
+    return <Grid container direction="row" justify="center" alignItems="center" maxWidth='md'>
         <Grid item xs={12}>
             <FormControl className={styles.root} component="fieldset">
                 <RadioGroup className={styles.group} row aria-label="position" name="position" defaultValue="top">
