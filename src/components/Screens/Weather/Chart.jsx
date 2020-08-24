@@ -122,7 +122,6 @@ export default function Chart(props) {
 
     useEffect(() => {
         if (currentDegrees) {
-            console.log('asd')
             setTimeseries(timeseries.map(item => {
                 return { ...item, temperature: fahrenheitToCelciusAndViceVers(item.temperature, currentDegrees) };
             }))
