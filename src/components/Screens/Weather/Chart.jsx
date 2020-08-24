@@ -5,7 +5,7 @@ import { Container, Fab } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { setActiveDateForCharts, constants } from '../../../redux/features/settingsReducer';
+import { setActiveDateForCharts } from '../../../redux/features/settingsReducer';
 import * as d3 from 'd3';
 import { fahrenheitToCelciusAndViceVers } from '../../../redux/features/weatherReducer';
 
