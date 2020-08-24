@@ -64,50 +64,57 @@ export default function Chart(props) {
     useEffect(() => {
         if (ref.current) {
             ref.current.innerHTML = '';
-            
-            const MARGIN = 30;
+
+            const MARGIN = ({ top: 30, right: 0, bottom: 30, left: 40 })
             const HEIGHT = 300;
             const WIDTH = ref.current.getBoundingClientRect().width;
-            
-            // Axis
+
+            // SVG
             const svgElement = d3.select(ref.current)
                 .append('svg')
-                    .attr('width', WIDTH)
-                    .attr('height', HEIGHT + MARGIN);
-            const g = svgElement        
-                .append('g')
-                    .attr('transform', `translate(${MARGIN}, 0)`);
-            const xScale = d3.scaleLinear()
-                .domain([d3.min(timeseries, d => d.hour), d3.max(timeseries, d => d.hour) + 1])
-                .range([0, WIDTH - MARGIN / 2])
-                .nice();
-            const yScale = d3.scaleLinear()
-                .domain([d3.min(timeseries, d => d.temperature), d3.max(timeseries, d => d.temperature)])
-                .range([HEIGHT, 0]);
-            const axisGeneratorX = d3.axisBottom().scale(xScale).ticks(2);
-            const axisGeneratorY = d3.axisLeft().scale(yScale);
-            g.append('g')
-                .attr('transform', `translate(0, ${HEIGHT})`)
-                .call(axisGeneratorX);
-            g.append('g')
-                .call(axisGeneratorY);
+                .attr('viewBox', [0, 0, WIDTH, HEIGHT]);
+
+            const g = svgElement
+                .append('g');
 
             // Bars
             const x = d3.scaleBand()
                 .domain(d3.range(timeseries.length))
-                .range([1, WIDTH - MARGIN]);
+                .range([MARGIN.left, WIDTH - MARGIN.right])
+                .padding(0.1);
+
             const y = d3.scaleLinear()
                 .domain([0, d3.max(timeseries, d => d.temperature)]).nice()
-                .range([HEIGHT, MARGIN]);
+                .range([HEIGHT - MARGIN.bottom, MARGIN.top]);
+
             g.append("g")
                 .attr("fill", 'steelblue')
-              .selectAll("rect")
-              .data(timeseries)
-              .join("rect")
+                .selectAll("rect")
+                .data(timeseries)
+                .join("rect")
                 .attr("x", (_, i) => x(i))
                 .attr("y", d => y(d.temperature))
                 .attr("height", d => y(0) - y(d.temperature))
                 .attr("width", x.bandwidth());
+
+            // Axis
+            const xScale = g => g
+                .attr("transform", `translate(0,${HEIGHT - MARGIN.bottom})`)
+                .call(d3.axisBottom(x).tickFormat(i => timeseries[i].hour).tickSizeOuter(0));
+
+            const yScale = g => g
+                .attr("transform", `translate(${MARGIN.left},0)`)
+                .call(d3.axisLeft(y))
+                .call(g => g.select(".domain").remove())
+                .call(g => g.append("text")
+                    .attr("x", -MARGIN.left)
+                    .attr("y", 10)
+                    .attr("fill", "currentColor")
+                    .attr("text-anchor", "start")
+                    .text('Temperature'));
+
+            g.append('g').call(xScale);
+            g.append('g').call(yScale);
         }
     }, [timeseries, ref]);
 
