@@ -40,6 +40,14 @@ export const selectCards = state => state.weather.cards;
 
 export default slice.reducer;
 
+export function fahrenheitToCelciusAndViceVers(temperature, currentDegrees) {
+    if (currentDegrees === constants.FAHRENHEIT) {
+        return Math.round((temperature * 9 / 5) + 32);
+    } else {
+        return Math.round((temperature - 32) * 5/9);
+    }
+}
+
 /**
  * Prepare cards from weather data.
  * 
@@ -119,11 +127,7 @@ function temperatureConverter(card, currentDegrees) {
         return card.temperature;
     }
 
-    if (currentDegrees === constants.FAHRENHEIT) {
-        return Math.round((card.temperature * 9 / 5) + 32);
-    } else {
-        return Math.round((card.temperature - 32) * 5/9);
-    }
+    return fahrenheitToCelciusAndViceVers(card.temperature, currentDegrees);
 }
 
 /**

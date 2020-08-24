@@ -5,16 +5,18 @@ import { Container, Fab } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { setActiveDateForCharts } from '../../../redux/features/settingsReducer';
+import { setActiveDateForCharts, constants } from '../../../redux/features/settingsReducer';
 import * as d3 from 'd3';
+import { fahrenheitToCelciusAndViceVers } from '../../../redux/features/weatherReducer';
 
 Chart.propTypes = PropTypes.shape({
     activeDateForChart: PropTypes.number.isRequired,
-    weatherData: PropTypes.object
+    weatherData: PropTypes.object.isRequired,
+    currentDegrees: PropTypes.string.isRequired
 });
 
 export default function Chart(props) {
-    const { activeDateForCharts, weatherData } = props;
+    const { activeDateForCharts, weatherData, currentDegrees } = props;
     const styles = makeStyles({
         root: {
             padding: 30,
@@ -117,6 +119,15 @@ export default function Chart(props) {
             g.append('g').call(yScale);
         }
     }, [timeseries, ref]);
+
+    useEffect(() => {
+        if (currentDegrees) {
+            console.log('asd')
+            setTimeseries(timeseries.map(item => {
+                return { ...item, temperature: fahrenheitToCelciusAndViceVers(item.temperature, currentDegrees) };
+            }))
+        }
+    }, [currentDegrees])
 
     return <>{activeDateForCharts && <Container maxWidth="md">
         <Paper className={styles.root}>

@@ -21,6 +21,6 @@ export default function () {
         <Degrees degrees={currentDegrees} />
         <Arrows pageSize={pageSize} currentPage={currentPage} cardsAmount={cardsAmount} />
         <ListOfWeatherCards cards={cards} degrees={currentDegrees} currentPage={currentPage} pageSize={pageSize} />
-        <Chart activeDateForCharts={activeDateForCharts} weatherData={weatherData} />
+        <Chart activeDateForCharts={activeDateForCharts} weatherData={weatherData} currentDegrees={currentDegrees} />
     </>
 }
