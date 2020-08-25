@@ -5,12 +5,12 @@ import { useDispatch } from 'react-redux';
 import { setCards, changeTemperatureType } from '../../../../redux/features/weatherReducer';
 import PropTypes from 'prop-types';
 
-ListOfWeatherCards.propTypes = PropTypes.shape({
-    cards: PropTypes.object,
+ListOfWeatherCards.propTypes = {
+    cards: PropTypes.array,
     degrees: PropTypes.string,
     pageSize: PropTypes.number,
     currentPage: PropTypes.number
-});
+};
 
 export default function ListOfWeatherCards(props) {
     const { cards, degrees, currentPage, pageSize } = props;
@@ -19,11 +19,11 @@ export default function ListOfWeatherCards(props) {
 
     useEffect(() => {
         dispatch(setCards());
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         dispatch(changeTemperatureType(degrees));
-    }, [degrees])
+    }, [degrees, dispatch])
 
     useEffect(() => {
         if (cards) {
@@ -40,8 +40,8 @@ export default function ListOfWeatherCards(props) {
 
     return <Container className={styles.root} maxWidth='md' data-testid='ListOfWeatherCardsComponent'>
         <Grid container justify='center' alignItems='stretch' spacing={2}>
-            {slicedCards && slicedCards.map((value) => (
-                <Grid item key={value.date} sm={4} xs={12}>
+            {slicedCards && slicedCards.map((value, idx) => (
+                <Grid item key={`${idx}-${value.date}`} sm={4} xs={12}>
                     <WeatherCard data={value} />
                 </Grid>
             ))}

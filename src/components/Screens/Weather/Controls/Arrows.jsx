@@ -9,11 +9,11 @@ import { useDispatch } from 'react-redux';
 import { prevoiusPage, nextPage } from '../../../../redux/features/settingsReducer';
 import PropTypes from 'prop-types';
 
-Arrows.propTypes = PropTypes.shape({
+Arrows.propTypes = {
     currentPage: PropTypes.number,
     pageSize: PropTypes.number,
     cardsAmount: PropTypes.number
-});
+};
 
 export default function Arrows(props) {
     const { currentPage, pageSize, cardsAmount } = props;
@@ -33,7 +33,7 @@ export default function Arrows(props) {
 
     useEffect(() => {
         setPreviousPageDisabled(currentPage <= 1);
-        setNextPageDisabled(currentPage >= Math.ceil(cardsAmount/ pageSize))
+        setNextPageDisabled(currentPage >= Math.ceil(cardsAmount / pageSize))
     }, [cardsAmount, currentPage, pageSize]);
 
     return <Container className={styles.root} maxWidth='md'>

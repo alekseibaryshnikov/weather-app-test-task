@@ -4,14 +4,14 @@ import { Paper, makeStyles } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { setActiveDateForCharts } from '../../../../redux/features/settingsReducer';
 
-WeatherCard.propTypes = PropTypes.shape({
+WeatherCard.propTypes = {
     data: PropTypes.shape({
         temperature: PropTypes.number,
         pressure: PropTypes.number,
         weatherType: PropTypes.string,
-        date: PropTypes.date
+        date: PropTypes.string
     })
-});
+};
 
 export default function WeatherCard(props) {
     const { data } = props;

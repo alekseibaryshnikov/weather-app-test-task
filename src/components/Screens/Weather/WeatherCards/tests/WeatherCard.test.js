@@ -7,7 +7,7 @@ const mockData = {
     temperature: 12,
     pressure: 1023,
     weatherType: 'cloudy',
-    date: new Date()
+    date: new Date().toUTCString()
 };
 
 test('test data rendering', () => {
@@ -16,5 +16,5 @@ test('test data rendering', () => {
     expect(getByText('1023')).toBeTruthy();
     expect(getByText('12°')).toBeTruthy();
     expect(getByText('cloudy')).toBeTruthy();
-    expect(getByText(date.toLocaleDateString())).toBeTruthy();
+    expect(getByText(new Date(date).toLocaleDateString())).toBeTruthy();
 });

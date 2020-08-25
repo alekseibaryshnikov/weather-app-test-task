@@ -9,11 +9,11 @@ import { setActiveDateForCharts } from '../../../redux/features/settingsReducer'
 import * as d3 from 'd3';
 import { fahrenheitToCelciusAndViceVers } from '../../../redux/features/weatherReducer';
 
-Chart.propTypes = PropTypes.shape({
-    activeDateForChart: PropTypes.number.isRequired,
-    weatherData: PropTypes.object.isRequired,
-    currentDegrees: PropTypes.string.isRequired
-});
+Chart.propTypes = {
+    activeDateForChart: PropTypes.number,
+    weatherData: PropTypes.object,
+    currentDegrees: PropTypes.string
+};
 
 export default function Chart(props) {
     const { activeDateForCharts, weatherData, currentDegrees } = props;
@@ -125,15 +125,15 @@ export default function Chart(props) {
             g.append('g').call(xScale);
             g.append('g').call(yScale);
         }
-    }, [timeseries, ref]);
+    }, [timeseries, ref, activeDateForCharts, currentDegrees]);
 
     useEffect(() => {
         if (currentDegrees) {
-            setTimeseries(timeseries.map(item => {
+            setTimeseries(t => t.map(item => {
                 return { ...item, temperature: fahrenheitToCelciusAndViceVers(item.temperature, currentDegrees) };
             }))
         }
-    }, [currentDegrees])
+    }, [currentDegrees]);
 
     return <>{activeDateForCharts && <Container maxWidth="md" data-testid='ChartComponent'>
         <Paper className={styles.root}>
