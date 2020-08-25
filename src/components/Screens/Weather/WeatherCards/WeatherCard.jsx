@@ -21,15 +21,16 @@ export default function WeatherCard(props) {
             height: '100%',
             boxSizing: 'border-box',
             padding: 10,
-            cursor: 'pointer'
+            cursor: 'pointer',
+            fontSize: '12px'
         }
     })();
     const dispatch = useDispatch();
 
     return <Paper className={styles.root} onClick={() => dispatch(setActiveDateForCharts(date.getTime()))}>
-        <p>Temperature: {data.temperature}</p>
-        <p>Pressure: {data.pressure}</p>
-        <p>Weather: {data.weatherType}</p>
-        <p>Date: {`${date.getDate()}.${date.getUTCMonth()}`}</p>
+        <p><strong>Temperature:</strong> {data.temperature}°</p>
+        <p><strong>Pressure:</strong> {data.pressure}</p>
+        <p><strong>Weather:</strong> {data.weatherType}</p>
+        <p><strong>Date:</strong> {date.toLocaleDateString()}</p>
     </Paper>;
 }

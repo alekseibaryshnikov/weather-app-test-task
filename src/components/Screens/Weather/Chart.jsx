@@ -23,7 +23,8 @@ export default function Chart(props) {
             position: 'relative',
             '.bar': {
                 fill: 'blue'
-            }
+            },
+            marginBottom: 30
         },
         fab: {
             right: -15,

@@ -41,7 +41,7 @@ export default function ListOfWeatherCards(props) {
     return <Container className={styles.root} maxWidth='md'>
         <Grid container justify='center' alignItems='stretch' spacing={2}>
             {slicedCards && slicedCards.map((value) => (
-                <Grid item key={value.date} xs={4}>
+                <Grid item key={value.date} sm={4} xs={12}>
                     <WeatherCard data={value} />
                 </Grid>
             ))}
