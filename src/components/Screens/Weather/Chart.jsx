@@ -113,7 +113,13 @@ export default function Chart(props) {
                     .attr("y", 10)
                     .attr("fill", "currentColor")
                     .attr("text-anchor", "start")
-                    .text('Temperature'));
+                    .text(`Temperature: ${currentDegrees.charAt(0).toUpperCase() + currentDegrees.slice(1)}`))
+                .call(g => g.append('text')
+                    .attr('x', '43%')
+                    .attr('y', 10)
+                    .attr('fill', 'currentColor')
+                    .attr('text-anchor', 'start')
+                    .text(`Date: ${new Date(activeDateForCharts).toLocaleDateString()}`));
 
             g.append('g').call(xScale);
             g.append('g').call(yScale);
