@@ -44,7 +44,7 @@ export function fahrenheitToCelciusAndViceVers(temperature, currentDegrees) {
     if (currentDegrees === constants.FAHRENHEIT) {
         return Math.round((temperature * 9 / 5) + 32);
     } else {
-        return Math.round((temperature - 32) * 5/9);
+        return Math.round((temperature - 32) * 5 / 9);
     }
 }
 
@@ -94,8 +94,8 @@ function summarize(referenceDate, weatherData) {
 
         if (idx === 0) {
             const middle = src[Math.floor(src.length / 2)];
-            const { data: { next_6_hours: { summary: { symbol_code } } } } = middle;
-            acc.weatherType = symbol_code;
+            const { data } = middle;
+            acc.weatherType = summary(data)['next_6_hours'];
             acc.date = curr.time;
         }
 
@@ -137,4 +137,34 @@ function temperatureConverter(card, currentDegrees) {
  */
 function convertPressure(pressure) {
     return Math.round(pressure * 0.75);
+}
+
+/**
+ * Sometimes you can get one of 'next hours', some times all of them.
+ * This proxy tries to go through all parameters to find next_6 in the first and
+ * then 12 and then 1.
+ * 
+ * If nothing was found just returns 'Hmm..' 
+ * @param {*} data 
+ */
+function summary(data) {
+    const NEXT_1_HOURS = 'next_1_hours';
+    const NEXT_6_HOURS = 'next_6_hours';
+    const NEXT_12_HOURS = 'next_12_hours';
+
+    return new Proxy(data, {      
+        get: (target, prop) => {
+            if (prop === NEXT_6_HOURS && target[prop]) {
+                return target[prop].summary['symbol_code'];
+            } else if (prop === NEXT_6_HOURS && !target[prop]) {
+                if (target[NEXT_12_HOURS]) {
+                    return target[NEXT_12_HOURS].summary['symbol_code'];
+                } else if (target[NEXT_1_HOURS]) {
+                    return target[NEXT_1_HOURS].summary['symbol_code'];
+                } else {
+                    return 'Hmm..';
+                }
+            }
+        }
+    });
 }

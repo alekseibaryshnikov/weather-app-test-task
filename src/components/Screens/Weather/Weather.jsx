@@ -6,6 +6,7 @@ import Chart from './Chart';
 import { useSelector } from 'react-redux';
 import { selectCurrentDegree, selectPageSize, selectCurrentPage, selectActiveDateForCharts } from '../../../redux/features/settingsReducer';
 import { selectCards, selectWeatherData } from '../../../redux/features/weatherReducer';
+import NotFoundError from '../../Errors/NotFound';
 
 
 export default function () {
@@ -16,6 +17,10 @@ export default function () {
     const activeDateForCharts = useSelector(selectActiveDateForCharts);
     const weatherData = useSelector(selectWeatherData);
     const cardsAmount = cards ? cards.length : 0;
+
+    if (!weatherData) {
+        return <NotFoundError code={404} message="Can't fetch data from server.." />
+    }
 
     return <>
         <Degrees degrees={currentDegrees} />
