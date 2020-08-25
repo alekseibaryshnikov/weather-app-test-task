@@ -135,7 +135,7 @@ export default function Chart(props) {
         }
     }, [currentDegrees])
 
-    return <>{activeDateForCharts && <Container maxWidth="md">
+    return <>{activeDateForCharts && <Container maxWidth="md" data-testid='ChartComponent'>
         <Paper className={styles.root}>
             <Fab className={styles.fab} color="primary" aria-label="add" size='small' onClick={() => dispatch(setActiveDateForCharts(null))}>
                 <CloseIcon />

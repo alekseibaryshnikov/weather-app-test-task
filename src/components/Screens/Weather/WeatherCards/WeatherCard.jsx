@@ -27,7 +27,7 @@ export default function WeatherCard(props) {
     })();
     const dispatch = useDispatch();
 
-    return <Paper className={styles.root} onClick={() => dispatch(setActiveDateForCharts(date.getTime()))}>
+    return <Paper className={styles.root} onClick={() => dispatch(setActiveDateForCharts(date.getTime()))} data-testid='WeatherCardComponent'>
         <p><strong>Temperature:</strong> {data.temperature}°</p>
         <p><strong>Pressure:</strong> {data.pressure}</p>
         <p><strong>Weather:</strong> {data.weatherType}</p>

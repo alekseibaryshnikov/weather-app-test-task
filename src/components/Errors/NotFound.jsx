@@ -10,7 +10,7 @@ NotFoundError.propTypes = PropTypes.shape({
 export default function NotFoundError(props) {
     const {code, message} = props;
 
-    return <Grid container>
+    return <Grid container data-testid='NotFoundErrorComponent'>
         <Grid xs={12}>
             <h1>Something goes wrong.. :(</h1>
             <h3>Error code: {code}</h3>
